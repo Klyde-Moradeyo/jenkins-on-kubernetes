@@ -14,6 +14,9 @@ spec:
       labels:
         app: jenkins
     spec:
+      securityContext:
+        fsGroup: 1000 
+        runAsUser: 0
       containers:
       - name: jenkins
         image: jenkins/jenkins:lts
@@ -24,8 +27,9 @@ spec:
             containerPort: 50000
         volumeMounts:
           - name: jenkins-vol
-            mountPath: /var/jenkins_vol
+            mountPath: /var/jenkins_home
       volumes:
         - name: jenkins-vol
-          emptyDir: 
+          persistentVolumeClaim:
+            claimName: jenkins-pvc
         

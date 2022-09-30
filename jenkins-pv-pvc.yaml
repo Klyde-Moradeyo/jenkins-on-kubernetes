@@ -1,0 +1,31 @@
+# PersistentVolume for Jenkins 
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: jenkins-pv
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/d/Kubernetes/storage/jenkins"
+    type: DirectoryOrCreate
+#hostPath can be defined as per your requirement. Technically you should not use the hostPath :D
+---
+# PersistentVolumeClaim for Jenkins
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jenkins-pvc
+  namespace: jenkins    # PV are not scoped to any namespace, but pvc is associated with the namespace
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi

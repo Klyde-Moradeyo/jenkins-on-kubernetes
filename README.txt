@@ -2,9 +2,9 @@ https://www.digitalocean.com/community/tutorials/how-to-install-jenkins-on-kuber
 
 
 - Retrieve your node IPs | kubectl get nodes -o wide
-- Get jenkins logs that contains admin password |kubectl logs jenkins-84f5b4bbb7-ktdtx -n jenkins
-- Port Forward | kubectl port-forward -n jenkins jenkins-84f5b4bbb7-ktdtx 3000:8080
-- Access jenkins pod shell | kubectl exec -i -t -n jenkins jenkins-84f5b4bbb7-ktdtx -c jenkins -- sh -c "clear; (bash || ash || sh)"
+- Get jenkins logs that contains admin password | kubectl logs jenkins-84f5b4bbb7-zwgjx -n jenkins
+- Port Forward | kubectl port-forward -n jenkins jenkins-84f5b4bbb7-zwgjx 3000:8080
+- Access jenkins pod shell | kubectl exec -i -t -n jenkins jenkins-84f5b4bbb7-zwgjx -c jenkins -- sh -c "clear; (bash || ash || sh)"
 
 kubectl delete namespace jenkins
 kubectl create namespace jenkins

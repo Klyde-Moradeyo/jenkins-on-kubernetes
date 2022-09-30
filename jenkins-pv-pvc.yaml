@@ -12,7 +12,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/mnt/d/Kubernetes/storage/jenkins"
+    path: "/var/jenkins_home"
     type: DirectoryOrCreate
 #hostPath can be defined as per your requirement. Technically you should not use the hostPath :D
 ---

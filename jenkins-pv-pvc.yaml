@@ -7,14 +7,21 @@ metadata:
     type: local
 spec:
   storageClassName: manual
+  persistentVolumeReclaimPolicy: Retain
   capacity:
     storage: 10Gi
   accessModes:
     - ReadWriteOnce
-  hostPath:
-    path: "/var/jenkins_home"
-    type: DirectoryOrCreate
-#hostPath can be defined as per your requirement. Technically you should not use the hostPath :D
+  local:
+    path: /d/Kubernetes/storage/jenkins
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - docker-desktop
 ---
 # PersistentVolumeClaim for Jenkins
 apiVersion: v1

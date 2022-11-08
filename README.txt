@@ -8,6 +8,7 @@ https://www.digitalocean.com/community/tutorials/how-to-install-jenkins-on-kuber
 
 kubectl delete namespace jenkins
 kubectl create namespace jenkins
+kubectl create -f jenkins-sc.yaml --namespace jenkins
 kubectl create -f jenkins-pv-pvc.yaml --namespace jenkins
 kubectl create -f jenkins-deployment.yaml --namespace jenkins
 kubectl create -f jenkins-service.yaml --namespace jenkins

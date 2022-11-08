@@ -16,7 +16,6 @@ spec:
     spec:
       securityContext:
         fsGroup: 1000 
-        runAsUser: 0
       containers:
       - name: jenkins
         image: jenkins/jenkins:lts
@@ -27,7 +26,7 @@ spec:
             containerPort: 50000
         volumeMounts:
           - name: jenkins-vol
-            mountPath: /var/jenkins_home
+            mountPath: /mnt/d/Kubernetes/storage/jenkins/var/jenkins_home
       volumes:
         - name: jenkins-vol
           persistentVolumeClaim:

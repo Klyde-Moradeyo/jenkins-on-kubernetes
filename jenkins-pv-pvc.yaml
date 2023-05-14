@@ -3,26 +3,17 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: jenkins-pv
-  labels:
-    type: local
+  namespace: jenkins
 spec:
-  storageClassName: local-storage
-  persistentVolumeReclaimPolicy: Retain
   capacity:
     storage: 10Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
-  local:
-    path: /d/Kubernetes/storage/jenkins
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-      - matchExpressions:
-        - key: kubernetes.io/hostname
-          operator: In
-          values:
-          - docker-desktop
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  hostPath:
+    path: /var/lib/docker/volumes/jenkins-data/_data
 ---
 # PersistentVolumeClaim for Jenkins
 apiVersion: v1

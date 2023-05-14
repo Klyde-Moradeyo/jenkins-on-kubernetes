@@ -15,6 +15,13 @@ spec:
       labels:
         app: jenkins
     spec:
+      initContainers:
+      - name: volume-mount-hack
+        image: busybox
+        command: ["sh", "-c", "chown -R 1000:1000 /var/jenkins_home"]
+        volumeMounts:
+        - name: jenkins-home
+          mountPath: /var/jenkins_home
       containers:
       - name: jenkins
         image: jenkins/jenkins:lts
@@ -25,5 +32,8 @@ spec:
           mountPath: /var/jenkins_home
       volumes:
       - name: jenkins-home
-        emptyDir: {}
-        
+        hostPath:
+          # directory location on host (in WSL format)
+          path: /run/desktop/mnt/host/s/development/k8_volumes/jenkins-data
+          # this field is optional
+          type: DirectoryOrCreate # will automatically create this directory on the host machine

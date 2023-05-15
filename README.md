@@ -8,6 +8,7 @@ This deployment is designed for local dev enviornments and not production worklo
 2. [Jenkins on Kubernetes with Persistent Storage](#jenkins-on-kubernetes-with-persistent-storage)
 3. [Prerequisites](#prerequisites)
 4. [Useful Commands](#useful-commands)
+5. [Docker Desktop for Windows Volume Mounts](#docker-desktop-for-windows-volume-mounts)
 5. [Docker Volume mount: Persisting Data when using K8 in Docker Desktop](#docker-volume-mount-persisting-data-when-using-k8-in-docker-desktop)
 6. [Host Path: Persisting data when using K8 in Docker Desktop using Docker](#host-path-persisting-data-when-using-k8-in-docker-desktop-using-docker)
 7. [Further Reading](#further-reading)
@@ -44,6 +45,26 @@ This deployment is designed for local dev enviornments and not production worklo
  kubectl create namespace jenkins
  kubectl apply -f .
 ```
+
+# Docker Desktop for Windows Volume Mounts
+
+When using Docker Desktop for Windows with Kubernetes, it's crucial to understand how volume mounts are handled.
+
+**Mounting Volumes**:
+
+To mount volumes, the path structure should be as follows:
+
+```bash
+/run/desktop/mnt/host/c/PATH/TO/FILE
+```
+
+For instance, if you wish to mount the volume located at C:\users\klyde\dev\jenkins in Windows, the path you would use in your Kubernetes configuration would be:
+```
+/run/desktop/mnt/host/c/users/klyde/dev/jenkins
+```
+
+**Why this Path?** 
+This path structure is necessary due to Docker Daemon's handling of cross-distro mounts. Docker Daemon uses /mnt/wsl as the mount point for these mounts, which it then maps to its own /run/desktop/mnt/host/wsl directory.
 
 # Docker Volume mount: Persisting data when using K8 in Docker Desktop
 
@@ -100,27 +121,6 @@ Create a file named jenkins-pv-pvc.yaml with the following content:
 This explains how to deploy Jenkins on Kubernetes using `hostPath` volumes for storing Jenkins data. 
 
 By using host path, you are able to view the contents of the `/var/jenkins_home` in your Windows file explorer.
-
-
-## Understanding Docker Desktop for Windows Kubernetes Volume Mounts
-
-When using Docker Desktop for Windows with Kubernetes, it's crucial to understand how volume mounts are handled.
-
-**Mounting Volumes**:
-
-To mount volumes, the path structure should be as follows:
-
-```bash
-/run/desktop/mnt/host/c/PATH/TO/FILE
-```
-
-For instance, if you wish to mount the volume located at C:\users\klyde\dev\jenkins in Windows, the path you would use in your Kubernetes configuration would be:
-```
-/run/desktop/mnt/host/c/users/klyde/dev/jenkins
-```
-
-**Why this Path?** 
-This path structure is necessary due to Docker Daemon's handling of cross-distro mounts. Docker Daemon uses /mnt/wsl as the mount point for these mounts, which it then maps to its own /run/desktop/mnt/host/wsl directory.
 
 ## Commands
 - Because we are using host paths, using `jenkins-pv-pvc.yaml` to create a peristent volume is not neccessary.

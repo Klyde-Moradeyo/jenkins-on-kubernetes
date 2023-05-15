@@ -13,7 +13,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   hostPath:
-    path: /var/lib/docker/volumes/jenkins-data/_data
+    path: /run/desktop/mnt/host/s/development/k8_volumes/jenkins-data
 ---
 # PersistentVolumeClaim for Jenkins
 apiVersion: v1
